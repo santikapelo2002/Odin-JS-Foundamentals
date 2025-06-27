@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        let humanScore = 0;
+        let computerScore = 0;
+
+
+         const playGame = ()=>{
+        let ronda = parseInt(prompt('Cuantas rondas quieres jugar?'));
+        for(let i = 0;i<=ronda;i++){
+            playRound();
+            
+        }
+        if(humanScore>computerScore){
+            console.log('Felicidades has ganado');
+        }else if(humanScore==computerScore){
+            console.log('Has empatado, suerte la próxima');
+        }else{
+            console.log( 'Has perdido, suerte la próxima');
+        }
+       }
+
+       
+       const getComputerChoice = ()=>{
+        let numero = parseInt(Math.random()*3);
+        return numero;
+       
+       }
+
+       const getHumanChoice = ()=>{
+        let eleccion = parseInt(prompt('elige piedra:0, papel:1 o tijera:2'));
+         return eleccion;
+       
+       }
+
+       const playRound = (humanChoice,computerChoice)=>{
+           humanChoice = getHumanChoice();
+        computerChoice = getComputerChoice();
+        if(humanChoice == 0 && computerChoice == 0){
+            console.log('piedra vs piedra = empate');
+
+        }else if(humanChoice == 0 && computerChoice == 1){
+            console.log('piedra vs papel = pierdes');
+            computerScore++;
+        }else if(humanChoice == 0 && computerChoice ==2){
+            console.log('piedra vs tijera = ganas');
+            humanScore++;
+        }else if(humanChoice == 1 && computerChoice == 1){
+            console.log('papel vs papel = empate');
+
+        }else if(humanChoice == 1 && computerChoice == 0){
+            console.log('papel vs piedra = ganas');
+            humanScore++;
+        }else if(humanChoice == 1 && computerChoice ==2){
+            console.log('papel vs tijera = pierdes');
+            computerScore++;
+        }else if(humanChoice == 2 && computerChoice == 1){
+            console.log('tijera vs papel = ganas');
+            humanScore++;
+
+        }else if(humanChoice == 2 && computerChoice == 0){
+            console.log('tijera vs piedra = pierdes') ;
+            computerScore++;
+        }else if(humanChoice == 2 && computerChoice ==2){
+            console.log('tijera vs tijera = empate');
+            
+        }
+       }
+
+      
+       
+        playGame();
+    </script>
+</body>
+</html>
