@@ -6,77 +6,190 @@
     <title>Document</title>
 </head>
 <body>
+
+
+
+    <button id="piedra">PIEDRA</button><button id="papel">PAPEL</button><button id="tijera">TIJERA</button>
+    <button id="jugar">Jugar</button><button id="reiniciar">reiniciar</button>
+   <div id="mensajeFinal"><strong></strong></div>
+<div id="scoreFinal"><em></em></div>
     <script>
 
+      let ronda;
+        let buttonIniciar = document.querySelector('button#jugar');
+        let buttonReiniciar = document.querySelector('button#reiniciar');
+        let buttonRock = document.querySelector('button#piedra');
+         let buttonPaper = document.querySelector('button#papel');
+        let buttonScissor = document.querySelector('button#tijera');
+        let allButton = document.querySelectorAll('button');
+      let mensajeFinal = document.querySelector('#mensajeFinal strong');
+        let scoreFinal = document.querySelector('#scoreFinal em');
+
+
+
+
+      
+
+       
+        let rondasJugadas = 0;
         let humanScore = 0;
         let computerScore = 0;
 
+         allButton.forEach(button=>{
+            if(button.id==="jugar"){
+                button.disabled=false;
+            }else{
+                button.disabled=true;
 
-         const playGame = ()=>{
-        let ronda = parseInt(prompt('Cuantas rondas quieres jugar?'));
-        for(let i = 0;i<=ronda;i++){
-            playRound();
+            }
             
-        }
-        if(humanScore>computerScore){
-            console.log('Felicidades has ganado');
-        }else if(humanScore==computerScore){
-            console.log('Has empatado, suerte la próxima');
-        }else{
-            console.log( 'Has perdido, suerte la próxima');
-        }
-       }
+        });
+     
+
+        buttonIniciar.addEventListener('click',()=>{
+             do{ 
+            
+          ronda = parseInt(prompt('Cuantas rondas quieres jugar?'));
+        
+      } while(isNaN(ronda) || ronda<=0);//dowhile lanzara el prompt repetidas veces mientras que el input aportado por el usuario no sea un número o sea un número menor o igual a 0      
+     
+         allButton.forEach(button=>{
+            if(button.id==="jugar"){
+                button.disabled=true;
+            }else{
+                button.disabled=false;
+
+            }
+            
+        });
+
+
+        });
+
+     buttonReiniciar.addEventListener('click',()=>{
+        allButton.forEach(button=>button.disabled=false);
+                                
+                                
+
+                                mensajeFinal.textContent="";
+                                scoreFinal.textContent="";
+                                rondasJugadas = 0;
+                                humanScore = 0;
+                                  computerScore = 0;
+                                    allButton.forEach(button=>{
+            if(button.id==="jugar"){
+                button.disabled=false;
+            }else{
+                button.disabled=true;
+
+            }
+            
+        });
+
+                                  
+     })
+   
+      
+         buttonRock.addEventListener('click',()=>{
+        
+            let eleccionHumana = 0;
+           funcionalidadBoton(eleccionHumana);
+       
+            
+        })
+         buttonPaper.addEventListener('click',()=>{
+          
+            let eleccionHumana = 1;
+            funcionalidadBoton(eleccionHumana);
+           
+
+           
+        })
+        buttonScissor.addEventListener('click',()=>{
+         
+            let eleccionHumana = 2;
+           funcionalidadBoton(eleccionHumana);
+       
+             
+           
+        })
+
+     
 
        
        const getComputerChoice = ()=>{
-        let numero = parseInt(Math.random()*3);
+        let numero = Math.floor(Math.random() * 3);
         return numero;
        
        }
 
-       const getHumanChoice = ()=>{
-        let eleccion = parseInt(prompt('elige piedra:0, papel:1 o tijera:2'));
-         return eleccion;
-       
+      const funcionalidadBoton=(eleccionHumana)=>{
+         rondasJugadas++;
+             let eleccionPc = getComputerChoice();
+            playRound(eleccionHumana,eleccionPc);
+              if(rondasJugadas===ronda){
+                  finalScore();
+               allButton.forEach(button=>{
+                if(button.id==="reiniciar"){
+                    buttonReiniciar.disabled = false;
+                }else{
+                    button.disabled=true;
+                }
+               });
        }
+       
+      }
 
-       const playRound = (humanChoice,computerChoice)=>{
-           humanChoice = getHumanChoice();
-        computerChoice = getComputerChoice();
-        if(humanChoice == 0 && computerChoice == 0){
-            console.log('piedra vs piedra = empate');
+       const playRound = (eleccionHumana,eleccionPc)=>{
+      
+        if(eleccionHumana== 0 && eleccionPc == 0){
+             mensajeFinal.textContent ='piedra vs piedra = empate';
 
-        }else if(humanChoice == 0 && computerChoice == 1){
-            console.log('piedra vs papel = pierdes');
+        }else if(eleccionHumana == 0 && eleccionPc == 1){
+            mensajeFinal.textContent ='piedra vs papel = pierdes';
             computerScore++;
-        }else if(humanChoice == 0 && computerChoice ==2){
+        }else if(eleccionHumana == 0 && eleccionPc ==2){
             console.log('piedra vs tijera = ganas');
             humanScore++;
-        }else if(humanChoice == 1 && computerChoice == 1){
-            console.log('papel vs papel = empate');
+        }else if(eleccionHumana == 1 && eleccionPc == 1){
+             mensajeFinal.textContent ='papel vs papel = empate';
 
-        }else if(humanChoice == 1 && computerChoice == 0){
-            console.log('papel vs piedra = ganas');
+        }else if(eleccionHumana== 1 && eleccionPc == 0){
+            mensajeFinal.textContent ='papel vs piedra = ganas';
             humanScore++;
-        }else if(humanChoice == 1 && computerChoice ==2){
-            console.log('papel vs tijera = pierdes');
+        }else if(eleccionHumana == 1 && eleccionPc ==2){
+             mensajeFinal.textContent ='papel vs tijera = pierdes';
             computerScore++;
-        }else if(humanChoice == 2 && computerChoice == 1){
-            console.log('tijera vs papel = ganas');
+        }else if(eleccionHumana == 2 && eleccionPc == 1){
+             mensajeFinal.textContent ='tijera vs papel = ganas';
             humanScore++;
 
-        }else if(humanChoice == 2 && computerChoice == 0){
-            console.log('tijera vs piedra = pierdes') ;
+        }else if(eleccionHumana == 2 && eleccionPc == 0){
+             mensajeFinal.textContent ='tijera vs piedra = pierdes' ;
             computerScore++;
-        }else if(humanChoice == 2 && computerChoice ==2){
-            console.log('tijera vs tijera = empate');
+        }else if(eleccionHumana == 2 && eleccionPc ==2){
+            mensajeFinal.textContent ='tijera vs tijera = empate';
             
         }
+       
        }
 
-      
+
+       function  finalScore(){
+
+              
+         if(humanScore>computerScore){
+                 mensajeFinal.textContent='Felicidades has ganado';
+                      }else if(humanScore==computerScore){
+                     mensajeFinal.textContent='Has empatado, suerte la próxima';
+                        }else{
+                             mensajeFinal.textContent= 'Has perdido, suerte la próxima';
+                                }
+                                scoreFinal.textContent = `humano:${humanScore}-${computerScore}:ordenador`;
+                             
+       }
+    
        
-        playGame();
     </script>
 </body>
 </html>
